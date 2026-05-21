@@ -1,0 +1,15 @@
+fastapi
+uvicorn[standard]
+
+google-generativeai
+
+sentence-transformers
+faiss-cpu
+
+pydantic
+python-dotenv
+
+numpy
+
+requests
+httpx
