@@ -13,3 +13,5 @@ numpy
 
 requests
 httpx
+
+google-genai

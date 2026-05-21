@@ -1,10 +1,11 @@
 import os
-import google.generativeai as genai
+from google import genai
 
 
 def generate_tldr(text: str) -> dict:
-    genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
-    model = genai.GenerativeModel("gemini-1.5-flash")
+    client = genai.Client(
+        api_key=os.getenv("GEMINI_API_KEY")
+    )
 
     prompt = f"""Summarize the following Reddit post.
 
@@ -20,8 +21,13 @@ Tone: <overall tone>
 Post:
 {text}
 """
-    resp = model.generate_content(prompt)
-    raw = resp.text.strip()
+
+    response = client.models.generate_content(
+        model="gemini-2.5-flash",
+        contents=prompt
+    )
+
+    raw = response.text.strip()
 
     lines = raw.split("\n")
     one_liner = ""
@@ -31,9 +37,17 @@ Post:
     for line in lines:
         if line.lower().startswith("one-liner"):
             one_liner = line.split(":", 1)[1].strip()
+
         elif line.startswith("-"):
-            bullets.append(line.lstrip("- ").strip())
+            bullets.append(
+                line.lstrip("- ").strip()
+            )
+
         elif line.lower().startswith("tone"):
             tone = line.split(":", 1)[1].strip()
 
-    return {"one_liner": one_liner, "bullets": bullets[:3], "tone": tone}
+    return {
+        "one_liner": one_liner,
+        "bullets": bullets[:3],
+        "tone": tone
+    }
