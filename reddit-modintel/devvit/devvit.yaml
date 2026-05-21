@@ -1,0 +1,6 @@
+name: modintel
+version: "1.0.0"
+permissions:
+  - subscribe
+  - fetch
+  - mod_log

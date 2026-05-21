@@ -1,0 +1,12 @@
+{
+  "name": "modintel",
+  "version": "1.0.0",
+  "private": true,
+  "devDependencies": {
+    "typescript": "^5.5.0",
+    "@devvit/public-api": "latest"
+  },
+  "scripts": {
+    "build": "tsc"
+  }
+}
